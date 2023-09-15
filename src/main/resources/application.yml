@@ -1,0 +1,12 @@
+server:
+  port: 7005
+
+spring:
+  devtools:
+    restart:
+      #需要实时更新的目录
+      additional-paths: resources/**,static/**,templates/**
+
+crypto:
+  path: D:\\data\\
+
