@@ -8,5 +8,5 @@ spring:
       additional-paths: resources/**,static/**,templates/**
 
 crypto:
-  path: D:\\data\\
+  path: /root/data/
 
