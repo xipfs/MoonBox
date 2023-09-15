@@ -67,7 +67,7 @@
                     const data = result.data;
                     data.forEach(function(item) {
                         console.log(item);
-                        $("#minFundingRateDiv ol").append("<li>"+item.pair+" "+(item.fundingRate * 100).toFixed(2)+"%"+"</li>");
+                        $("#minFundingRateDiv ol").append("<li>"+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+"</li>");
                     });
                 }
             }
