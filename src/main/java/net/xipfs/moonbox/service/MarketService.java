@@ -60,6 +60,8 @@ public class MarketService {
 
     public void queryFundingRate(){
         MarketCache.fundingRateMap.clear();
+        MarketCache.minFundingRateList.clear();
+        MarketCache.maxFundingRateList.clear();
         log.info("start get funding rate ...");
         List<Symbol> symbolList = new ArrayList<>();
         String url = "https://www.binance.com/fapi/v1/premiumIndex";
