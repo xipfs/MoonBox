@@ -52,10 +52,20 @@
                     const data = result.data;
                     data.forEach(function(item) {
                         console.log(item);
+                        var show = "";
+                        if(item.sumOpenInterestValue > 50000000){
+                            show="<li><p style='color:green;'>";
+                        }else if(item.sumOpenInterestValue > 80000000){
+                            show="<li><p style='color:blue;'>";
+                        }else if(item.sumOpenInterestValue > 100000000){
+                            show="<li><p style='color:red;'>";
+                        }else{
+                            show="<li><p>";
+                        }
                         $("#maxFundingRateDiv ol").append(
-                        "<li>"+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+
-                        " 持仓量: "+item.sumOpenInterest+" 持仓价值: "+item.sumOpenInterestValue+
-                        "</li>"
+                        show+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+
+                        " 持仓量: "+(item.sumOpenInterest).toFixed()+" 持仓价值: "+(item.sumOpenInterestValue).toFixed()+
+                        "</>p></li>"
                         );
                     });
                 }
@@ -71,10 +81,20 @@
                     const data = result.data;
                     data.forEach(function(item) {
                         console.log(item);
+                        var show = "";
+                        if(item.sumOpenInterestValue > 50000000){
+                            show="<li><p style='color:green;'>";
+                        }else if(item.sumOpenInterestValue > 80000000){
+                            show="<li><p style='color:blue;'>";
+                        }else if(item.sumOpenInterestValue > 100000000){
+                            show="<li><p style='color:red;'>";
+                        }else{
+                            show="<li><p>";
+                        }
                         $("#minFundingRateDiv ol").append(
-                        "<li>"+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+
-                        " 持仓量: "+item.sumOpenInterest+" 持仓价值: "+item.sumOpenInterestValue+
-                        "</li>");
+                        show+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+
+                        " 持仓量: "+(item.sumOpenInterest).toFixed()+" 持仓价值: "+(item.sumOpenInterestValue).toFixed()+
+                        "</p></li>");
                     });
                 }
             }
