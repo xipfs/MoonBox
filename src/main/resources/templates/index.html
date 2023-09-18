@@ -52,7 +52,11 @@
                     const data = result.data;
                     data.forEach(function(item) {
                         console.log(item);
-                        $("#maxFundingRateDiv ol").append("<li>"+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+"</li>");
+                        $("#maxFundingRateDiv ol").append(
+                        "<li>"+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+
+                        " 持仓量: "+item.sumOpenInterest+" 持仓价值: "+item.sumOpenInterestValue+
+                        "</li>"
+                        );
                     });
                 }
             }
@@ -67,7 +71,10 @@
                     const data = result.data;
                     data.forEach(function(item) {
                         console.log(item);
-                        $("#minFundingRateDiv ol").append("<li>"+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+"</li>");
+                        $("#minFundingRateDiv ol").append(
+                        "<li>"+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+
+                        " 持仓量: "+item.sumOpenInterest+" 持仓价值: "+item.sumOpenInterestValue+
+                        "</li>");
                     });
                 }
             }
