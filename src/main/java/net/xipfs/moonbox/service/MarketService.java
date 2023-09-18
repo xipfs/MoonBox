@@ -104,8 +104,8 @@ public class MarketService {
         JSONArray array = JSONArray.parseArray(result);
         array.forEach(object -> {
             JSONObject jsonObject = (JSONObject) object;
-            String sumOpenInterest= jsonObject.getString("sumOpenInterest");
-            String sumOpenInterestValue = jsonObject.getString("sumOpenInterestValue");
+            Double sumOpenInterest= jsonObject.getDouble("sumOpenInterest");
+            Double sumOpenInterestValue = jsonObject.getDouble("sumOpenInterestValue");
             symbol.setSumOpenInterest(sumOpenInterest);
             symbol.setSumOpenInterestValue(sumOpenInterestValue);
         });
