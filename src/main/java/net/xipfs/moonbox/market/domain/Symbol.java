@@ -12,6 +12,8 @@ public class Symbol implements Comparable<Symbol>{
     private String base;
     private String quote;
     private Double fundingRate;
+    private String sumOpenInterest;
+    private String sumOpenInterestValue;
 
     @Override
     public int compareTo(@NotNull Symbol o) {
@@ -22,6 +24,6 @@ public class Symbol implements Comparable<Symbol>{
     public String toString(){
         NumberFormat nf = NumberFormat.getInstance();
         nf.setGroupingUsed(false);
-        return pair+" "+nf.format(fundingRate);
+        return pair+" 费率: "+nf.format(fundingRate)+" 持仓量: "+sumOpenInterest+" 持仓价值: "+sumOpenInterestValue;
     }
 }

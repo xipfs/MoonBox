@@ -58,6 +58,9 @@ public class MarketService {
         log.info("get market symbols end ...");
     }
 
+    /**
+     *  获取资金费率
+     */
     public void queryFundingRate(){
         MarketCache.fundingRateMap.clear();
         MarketCache.minFundingRateList.clear();
@@ -88,5 +91,23 @@ public class MarketService {
         MarketCache.maxFundingRateList.addAll(symbolList.subList(symbolList.size()-10,symbolList.size()-1));
         FileUtil.writeLines(symbolList,cryptoConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
         log.info("get funding rate end...");
+    }
+
+    /**
+     * 获取持仓信息
+     *
+     * @param symbol 交易对
+     */
+    public void queryOpenInterest(Symbol symbol){
+        String url = "https://www.binance.com/futures/data/openInterestHist?symbol="+symbol.getPair()+"&period=5m&limit=1";
+        String result = HttpUtil.get(url);
+        JSONArray array = JSONArray.parseArray(result);
+        array.forEach(object -> {
+            JSONObject jsonObject = (JSONObject) object;
+            String sumOpenInterest= jsonObject.getString("sumOpenInterest");
+            String sumOpenInterestValue = jsonObject.getString("sumOpenInterestValue");
+            symbol.setSumOpenInterest(sumOpenInterest);
+            symbol.setSumOpenInterestValue(sumOpenInterestValue);
+        });
     }
 }
