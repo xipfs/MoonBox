@@ -29,7 +29,6 @@ import java.util.List;
 @Service
 public class FishService {
     public String peek(Symbol symbol){
-        DecimalFormat format = new DecimalFormat("#.0000");
         String str = "";
         if(MarketCache.symbolMap.containsKey(symbol.getBase())){
             String url = "https://www.binance.com/fapi/v1/premiumIndex?symbol="+symbol.getPair();
@@ -38,13 +37,13 @@ public class FishService {
             Double indexPrice = jsonObject.getDouble("indexPrice");
             Double markPrice = jsonObject.getDouble("markPrice");
             Double lastFundingRate = jsonObject.getDouble("lastFundingRate");
-            str += (format.format(indexPrice)+" "+format.format(markPrice)+" "+format.format(lastFundingRate*100)+"%");
+            str += (String.format("%.4f",indexPrice)+" "+String.format("%.4f",markPrice)+" "+String.format("%.4f",lastFundingRate*100)+"%");
         }else{
             String url = "https://www.binance.com/fapi/v1/ticker/price?symbol="+symbol.getPair();
             String result = HttpUtil.get(url);
             JSONObject jsonObject = JSONObject.parseObject(result);
             Double price = jsonObject.getDouble("price");
-            str += price;
+            str += String.format("%.4f",price);
         }
         return str;
     }
