@@ -13,8 +13,8 @@ public class WebController {
         return "index";
     }
 
-    @GetMapping("/price")
-    public String price() {
-        return "price";
+    @GetMapping("/ai")
+    public String ai() {
+        return "ai";
     }
 }

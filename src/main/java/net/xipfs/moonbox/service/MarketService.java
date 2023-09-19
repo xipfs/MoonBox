@@ -93,6 +93,20 @@ public class MarketService {
         log.info("get funding rate end...");
     }
 
+    public boolean queryFundingRate(Symbol symbol){
+        if(MarketCache.symbolMap.containsKey(symbol.getBase())){
+            List<Symbol> symbolList = new ArrayList<>();
+            String url = "https://www.binance.com/fapi/v1/premiumIndex?symbol="+symbol.getPair();
+            String result = HttpUtil.get(url);
+            JSONObject jsonObject = JSONObject.parseObject(result);
+            symbol.setFundingRate(jsonObject.getDouble("lastFundingRate"));
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     /**
      * 获取持仓信息
      *

@@ -11,10 +11,10 @@
     <div>
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">首页</a>
+                <a class="nav-link active" href="#">首页</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/ai">AI分析</a>
+                <a class="nav-link active"  aria-current="page"  href="/ai">AI分析</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">链接</a>
@@ -51,7 +51,22 @@
                 if(result.status === 0){
                     const data = result.data;
                     data.forEach(function(item) {
-
+                        console.log(item);
+                        var show = "";
+                        if(item.sumOpenInterestValue > 50000000){
+                            show="<li><p style='color:green;'>";
+                        }else if(item.sumOpenInterestValue > 80000000){
+                            show="<li><p style='color:blue;'>";
+                        }else if(item.sumOpenInterestValue > 100000000){
+                            show="<li><p style='color:red;'>";
+                        }else{
+                            show="<li><p>";
+                        }
+                        $("#maxFundingRateDiv ol").append(
+                        show+item.base+" "+(item.fundingRate * 100).toFixed(2)+"%"+
+                        " 持仓量: "+(item.sumOpenInterest).toFixed()+" 持仓价值: "+(item.sumOpenInterestValue).toFixed()+
+                        "美元</p></li>"
+                        );
                     });
                 }
             }
