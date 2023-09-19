@@ -109,6 +109,7 @@ public class MarketService {
      * @param symbol 交易对
      */
     public void queryOpenInterest(Symbol symbol){
+        MarketCache.sendList.clear();
         String url = "https://www.binance.com/futures/data/openInterestHist?symbol="+symbol.getPair()+"&period=5m&limit=1";
         String result = HttpUtil.get(url);
         JSONArray array = JSONArray.parseArray(result);
@@ -116,8 +117,11 @@ public class MarketService {
             JSONObject jsonObject = (JSONObject) object;
             Double sumOpenInterest= jsonObject.getDouble("sumOpenInterest");
             Double sumOpenInterestValue = jsonObject.getDouble("sumOpenInterestValue");
-            symbol.setSumOpenInterest(sumOpenInterest);
-            symbol.setSumOpenInterestValue(sumOpenInterestValue);
+            symbol.setSumOpenInterest(sumOpenInterest == null? 0.0 : sumOpenInterest);
+            symbol.setSumOpenInterestValue(sumOpenInterestValue == null? 0.0: sumOpenInterestValue);
+            if(symbol.getSumOpenInterestValue() >= 100000000){
+                MarketCache.sendList.add(symbol.getPair());
+            }
         });
     }
 }
