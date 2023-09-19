@@ -39,7 +39,7 @@ public class MarketJob {
         }
     }
 
-    @Scheduled(initialDelay = 50000, fixedRate=1000*60*4)
+    @Scheduled(initialDelay = 50000, fixedRate=1000*60*60*4)
     public void sendMessage(){
         StringBuffer sb = new StringBuffer("持仓价值超过1亿美元: ");
         if(MarketCache.sendList.isEmpty()){
