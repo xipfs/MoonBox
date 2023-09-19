@@ -9,7 +9,9 @@ spring:
 
 crypto:
   path: /root/moonbox/data/
+  # path: D:\\moonbox\\data\\
 
 secret:
   path: /root/moonbox/secret.properties
+  # path: D:\\moonbox\\secret.properties
 
