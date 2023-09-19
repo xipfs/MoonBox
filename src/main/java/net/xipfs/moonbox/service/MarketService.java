@@ -119,9 +119,6 @@ public class MarketService {
             Double sumOpenInterestValue = jsonObject.getDouble("sumOpenInterestValue");
             symbol.setSumOpenInterest(sumOpenInterest == null? 0.0 : sumOpenInterest);
             symbol.setSumOpenInterestValue(sumOpenInterestValue == null? 0.0: sumOpenInterestValue);
-            if(symbol.getSumOpenInterestValue() >= 100000000){
-                MarketCache.sendList.add(symbol.getPair());
-            }
         });
     }
 }
