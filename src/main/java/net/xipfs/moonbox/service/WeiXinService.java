@@ -4,6 +4,7 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.xipfs.moonbox.cache.MarketCache;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class WeiXinService {
     public void sendFundingMsg(String content){
         JSONObject param = JSONUtil.createObj();
-        param.set("appToken","AT_5WdPH4neS4omYE9ERfXQ8IG2bSvPKryA");
+        param.set("appToken", MarketCache.secretMap.get("WxPusherToken"));
         param.set("content",content);
         param.set("contentType",1);
         param.set("topicIds",new Integer[]{22573});

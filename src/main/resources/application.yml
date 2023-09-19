@@ -8,5 +8,8 @@ spring:
       additional-paths: resources/**,static/**,templates/**
 
 crypto:
-  path: /root/data/
+  path: /root/moonbox/data/
+
+secret:
+  path: /root/moonbox/secret.properties
 

@@ -8,7 +8,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import net.xipfs.moonbox.cache.MarketCache;
-import net.xipfs.moonbox.config.CryptoConfig;
+import net.xipfs.moonbox.config.MoonBoxConfig;
 import net.xipfs.moonbox.market.domain.MarketType;
 import net.xipfs.moonbox.market.domain.Symbol;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import java.util.List;
 @Service
 public class MarketService {
     @Autowired
-    private CryptoConfig cryptoConfig;
+    private MoonBoxConfig moonBoxConfig;
     /**
      * 查询所有交易对
      */
@@ -53,7 +53,7 @@ public class MarketService {
                 symbolList.add(symbol.getPair());
             }
         });
-        FileUtil.writeLines(symbolList,cryptoConfig.getDataPath()+"symbols.txt", CharsetUtil.UTF_8,false);
+        FileUtil.writeLines(symbolList, moonBoxConfig.getDataPath()+"symbols.txt", CharsetUtil.UTF_8,false);
     }
 
     /**
@@ -86,7 +86,7 @@ public class MarketService {
         Collections.sort(symbolList);
         MarketCache.minFundingRateList.addAll(symbolList.subList(0,9));
         MarketCache.maxFundingRateList.addAll(symbolList.subList(symbolList.size()-10,symbolList.size()-1));
-        FileUtil.writeLines(symbolList,cryptoConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
+        FileUtil.writeLines(symbolList, moonBoxConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
     }
 
     public boolean queryFundingRate(Symbol symbol){

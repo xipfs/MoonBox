@@ -14,7 +14,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Data
-public class CryptoConfig {
+public class MoonBoxConfig {
     @Value("${crypto.path}")
     private String dataPath;
+
+    @Value("${secret.path}")
+    private String secretPath;
 }
