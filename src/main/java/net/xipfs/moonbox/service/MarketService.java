@@ -35,7 +35,6 @@ public class MarketService {
      * 查询所有交易对
      */
     public void queryAllSymbols(){
-        log.info("start get market symbols ...");
         MarketCache.symbolMap.clear();
         List<String> symbolList = new ArrayList<>();
         String url = "https://api.binance.com/api/v3/exchangeInfo";
@@ -55,7 +54,6 @@ public class MarketService {
             }
         });
         FileUtil.writeLines(symbolList,cryptoConfig.getDataPath()+"symbols.txt", CharsetUtil.UTF_8,false);
-        log.info("get market symbols end ...");
     }
 
     /**
@@ -65,7 +63,6 @@ public class MarketService {
         MarketCache.fundingRateMap.clear();
         MarketCache.minFundingRateList.clear();
         MarketCache.maxFundingRateList.clear();
-        log.info("start get funding rate ...");
         List<Symbol> symbolList = new ArrayList<>();
         String url = "https://www.binance.com/fapi/v1/premiumIndex";
         String result = HttpUtil.get(url);
@@ -90,7 +87,6 @@ public class MarketService {
         MarketCache.minFundingRateList.addAll(symbolList.subList(0,9));
         MarketCache.maxFundingRateList.addAll(symbolList.subList(symbolList.size()-10,symbolList.size()-1));
         FileUtil.writeLines(symbolList,cryptoConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
-        log.info("get funding rate end...");
     }
 
     public boolean queryFundingRate(Symbol symbol){
