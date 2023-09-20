@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import net.xipfs.moonbox.cache.MarketCache;
 import net.xipfs.moonbox.config.MoonBoxConfig;
@@ -28,6 +29,7 @@ import java.util.List;
 
 @Slf4j
 @Service
+@Data
 public class MarketService {
     @Autowired
     private MoonBoxConfig moonBoxConfig;
@@ -84,14 +86,13 @@ public class MarketService {
             }
         });
         Collections.sort(symbolList);
-        MarketCache.minFundingRateList.addAll(symbolList.subList(0,9));
-        MarketCache.maxFundingRateList.addAll(symbolList.subList(symbolList.size()-10,symbolList.size()-1));
+        MarketCache.minFundingRateList.addAll(symbolList.subList(0,10));
+        MarketCache.maxFundingRateList.addAll(symbolList.subList(symbolList.size()-10,symbolList.size()));
         FileUtil.writeLines(symbolList, moonBoxConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
     }
 
     public boolean queryFundingRate(Symbol symbol){
         if(MarketCache.symbolMap.containsKey(symbol.getBase())){
-            List<Symbol> symbolList = new ArrayList<>();
             String url = "https://www.binance.com/fapi/v1/premiumIndex?symbol="+symbol.getPair();
             String result = HttpUtil.get(url);
             JSONObject jsonObject = JSONObject.parseObject(result);

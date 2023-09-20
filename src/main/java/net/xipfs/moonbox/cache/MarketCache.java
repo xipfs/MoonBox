@@ -11,13 +11,11 @@ public class MarketCache {
     public static Map<String,String> secretMap = new HashMap<>();
     public static Map<String, String> symbolMap = new HashMap<>();
     public static Map<String, Symbol> fundingRateMap = new HashMap<>();
-    public static List<String> monitorSymbolList = new ArrayList<>();
-
     // TOP 10 SHORT
-    public static List<Symbol> minFundingRateList = new ArrayList<>(10);
+    public static List<Symbol> minFundingRateList = new ArrayList<>();
 
     // TOP 10 LONG
-    public static List<Symbol> maxFundingRateList = new ArrayList<>(10);
+    public static List<Symbol> maxFundingRateList = new ArrayList<>();
 
     public static List<String> sendList = new ArrayList<>();
 
