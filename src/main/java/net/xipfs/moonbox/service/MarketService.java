@@ -1,5 +1,6 @@
 package net.xipfs.moonbox.service;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
@@ -87,7 +88,7 @@ public class MarketService {
         });
         Collections.sort(symbolList);
         MarketCache.minFundingRateList.addAll(symbolList.subList(0,10));
-        MarketCache.maxFundingRateList.addAll(symbolList.subList(symbolList.size()-10,symbolList.size()));
+        MarketCache.maxFundingRateList.addAll(CollUtil.reverse(symbolList).subList(0,10));
         FileUtil.writeLines(symbolList, moonBoxConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
     }
 
