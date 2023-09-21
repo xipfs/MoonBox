@@ -43,40 +43,42 @@ public class QuantJob {
         StringBuilder sb = new StringBuilder();
         boolean flag = false;
         for(Symbol symbol: MarketCache.minFundingRateList){
-            List<Candlestick> candlestickList = marketService.queryKlines(symbol, Constants.INTERVAL.INTERVAL_1h);
-            BarSeries barSeries = Ta4jUtil.convertToBarSeries(candlestickList);
-            Strategy strategy = StrategyBuilder.build(StrategyType.DOUBLE_EMA,barSeries);
-            BarSeriesManager seriesManager = new BarSeriesManager(barSeries);
-            TradingRecord tradingRecord = seriesManager.run(strategy);
-            int barSize = barSeries.getBarCount();
-            int index = barSize - 1;
-            Bar latestBar = barSeries.getBar(index);
-            ZonedDateTime beginTime = latestBar.getBeginTime();
-            String timeStr = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(beginTime);
+            if(symbol.getSumOpenInterestValue() > Constants.MIN_OPEN_INTEREST_VALUE){
+                List<Candlestick> candlestickList = marketService.queryKlines(symbol, Constants.INTERVAL.INTERVAL_1h);
+                BarSeries barSeries = Ta4jUtil.convertToBarSeries(candlestickList);
+                Strategy strategy = StrategyBuilder.build(StrategyType.DOUBLE_EMA,barSeries);
+                BarSeriesManager seriesManager = new BarSeriesManager(barSeries);
+                TradingRecord tradingRecord = seriesManager.run(strategy);
+                int barSize = barSeries.getBarCount();
+                int index = barSize - 1;
+                Bar latestBar = barSeries.getBar(index);
+                ZonedDateTime beginTime = latestBar.getBeginTime();
+                String timeStr = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(beginTime);
 
-            String preSpace = "  ";
-            String lineSplitter = "\n";
-            if(strategy == null){
-                return;
-            }
-            if (strategy.shouldEnter(index)) {
-                if (tradingRecord.enter(index, latestBar.getClosePrice(), DecimalNum.valueOf(10))) {
-                    Trade entry = tradingRecord.getLastEntry();
-                    sb.append("AI策略: ")
-                            .append(preSpace).append("时间: ").append(timeStr).append(lineSplitter)
-                            .append(preSpace).append("买入信号").append(lineSplitter)
-                            .append(preSpace).append("当前价格:").append(entry.getNetPrice().doubleValue()).append(lineSplitter);
+                String preSpace = "  ";
+                String lineSplitter = "\n";
+                if(strategy == null){
+                    return;
                 }
-                flag  = true;
-            } else if (strategy.shouldExit(index)) {
-                if (tradingRecord.exit(index, latestBar.getClosePrice(), DecimalNum.valueOf(10))) {
-                    Trade exit = tradingRecord.getLastEntry();
-                    sb.append("AI策略: ")
-                            .append(preSpace).append("时间: ").append(timeStr).append(lineSplitter)
-                            .append(preSpace).append("卖出信号").append(lineSplitter)
-                            .append(preSpace).append("当前价格:").append(exit.getNetPrice().doubleValue()).append(lineSplitter);
+                if (strategy.shouldEnter(index)) {
+                    if (tradingRecord.enter(index, latestBar.getClosePrice(), DecimalNum.valueOf(10))) {
+                        Trade entry = tradingRecord.getLastEntry();
+                        sb.append("AI策略: ")
+                                .append(preSpace).append("时间: ").append(timeStr).append(lineSplitter)
+                                .append(preSpace).append("买入信号").append(lineSplitter)
+                                .append(preSpace).append("当前价格:").append(entry.getNetPrice().doubleValue()).append(lineSplitter);
+                    }
+                    flag  = true;
+                } else if (strategy.shouldExit(index)) {
+                    if (tradingRecord.exit(index, latestBar.getClosePrice(), DecimalNum.valueOf(10))) {
+                        Trade exit = tradingRecord.getLastEntry();
+                        sb.append("AI策略: ")
+                                .append(preSpace).append("时间: ").append(timeStr).append(lineSplitter)
+                                .append(preSpace).append("卖出信号").append(lineSplitter)
+                                .append(preSpace).append("当前价格:").append(exit.getNetPrice().doubleValue()).append(lineSplitter);
+                    }
+                    flag = true;
                 }
-                flag = true;
             }
         }
         if(flag){

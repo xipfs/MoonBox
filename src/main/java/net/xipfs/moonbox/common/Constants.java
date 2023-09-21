@@ -11,6 +11,7 @@ package net.xipfs.moonbox.common;
 public class Constants {
 
     // risk Alarm
+    public static long MIN_OPEN_INTEREST_VALUE = 400000000;
     public static long OPEN_INTEREST_VALUE = 100000000;
     public static double MIN_FUNDING_RATE  = -0.01;
     public static double MAX_FUNDING_RATE = 0.01;
