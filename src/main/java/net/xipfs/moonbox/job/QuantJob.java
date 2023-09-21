@@ -41,6 +41,7 @@ public class QuantJob {
     @Scheduled(cron = "0 0 * * * ?")
     public void doubleEma(){
         StringBuilder sb = new StringBuilder();
+        boolean flag = false;
         for(Symbol symbol: MarketCache.minFundingRateList){
             List<Candlestick> candlestickList = marketService.queryKlines(symbol, Constants.INTERVAL.INTERVAL_1h);
             BarSeries barSeries = Ta4jUtil.convertToBarSeries(candlestickList);
@@ -66,6 +67,7 @@ public class QuantJob {
                             .append(preSpace).append("买入信号").append(lineSplitter)
                             .append(preSpace).append("当前价格:").append(entry.getNetPrice().doubleValue()).append(lineSplitter);
                 }
+                flag  = true;
             } else if (strategy.shouldExit(index)) {
                 if (tradingRecord.exit(index, latestBar.getClosePrice(), DecimalNum.valueOf(10))) {
                     Trade exit = tradingRecord.getLastEntry();
@@ -74,9 +76,12 @@ public class QuantJob {
                             .append(preSpace).append("卖出信号").append(lineSplitter)
                             .append(preSpace).append("当前价格:").append(exit.getNetPrice().doubleValue()).append(lineSplitter);
                 }
+                flag = true;
             }
         }
-        weiXinService.sendFundingMsg(sb.toString());
+        if(flag){
+            weiXinService.sendFundingMsg(sb.toString());
+        }
     }
 
 }
