@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MarketCache {
+    /** 秘密文件 */
     public static Map<String,String> secretMap = new HashMap<>();
     public static Map<String, String> symbolMap = new HashMap<>();
     public static Map<String, Symbol> fundingRateMap = new HashMap<>();

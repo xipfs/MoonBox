@@ -1,4 +1,4 @@
-package net.xipfs.moonbox.quant.strategies;
+package net.xipfs.moonbox.quant.strategy;
 
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;

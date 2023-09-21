@@ -13,6 +13,7 @@ import net.xipfs.moonbox.cache.MarketCache;
 import net.xipfs.moonbox.config.MoonBoxConfig;
 import net.xipfs.moonbox.market.domain.MarketType;
 import net.xipfs.moonbox.market.domain.Symbol;
+import net.xipfs.moonbox.quant.common.Candlestick;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -122,5 +123,29 @@ public class MarketService {
             symbol.setSumOpenInterest(sumOpenInterest == null? 0.0 : sumOpenInterest);
             symbol.setSumOpenInterestValue(sumOpenInterestValue == null? 0.0: sumOpenInterestValue);
         });
+    }
+
+    public List<Candlestick> queryKlines(Symbol symbol, String interval){
+        List<Candlestick> candlesticks = new ArrayList<>();
+        String url = "https://www.binance.com/fapi/v1/klines?symbol="+symbol.getPair()+"&interval="+interval;
+        String result = HttpUtil.get(url);
+        JSONArray array = JSONArray.parseArray(result);
+        array.forEach(object -> {
+            Candlestick candlestick = new Candlestick();
+            JSONArray arr = (JSONArray) object;
+            candlestick.setOpenTime(arr.getLong(0));
+            candlestick.setOpen(arr.getString(1));
+            candlestick.setHigh(arr.getString(2));
+            candlestick.setLow(arr.getString(3));
+            candlestick.setClose(arr.getString(4));
+            candlestick.setVolume(arr.getString(5));
+            candlestick.setCloseTime(arr.getLong(6));
+            candlestick.setQuoteAssetVolume(arr.getString(7));
+            candlestick.setNumberOfTrades(arr.getLong(8));
+            candlestick.setTakerBuyBaseAssetVolume(arr.getString(9));
+            candlestick.setTakerBuyQuoteAssetVolume(arr.getString(10));
+            candlesticks.add(candlestick);
+        });
+        return candlesticks;
     }
 }

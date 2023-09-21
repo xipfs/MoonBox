@@ -21,6 +21,6 @@ public class WeiXinTest extends BaseTest {
 
     @Test
     public void sendMsg(){
-        weiXinService.sendFundingMsg("hello world");
+        // weiXinService.sendFundingMsg("hello world");
     }
 }

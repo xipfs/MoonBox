@@ -1,4 +1,4 @@
-package net.xipfs.moonbox.quant.core;
+package net.xipfs.moonbox.quant.common;
 
 import lombok.ToString;
 
