@@ -62,7 +62,7 @@ public class QuantJob {
             if (strategy.shouldEnter(index)) {
                 if (tradingRecord.enter(index, latestBar.getClosePrice(), DecimalNum.valueOf(10))) {
                     Trade entry = tradingRecord.getLastEntry();
-                    sb.append("Double EMA: ")
+                    sb.append("AI策略: ")
                             .append(preSpace).append("时间: ").append(timeStr).append(lineSplitter)
                             .append(preSpace).append("买入信号").append(lineSplitter)
                             .append(preSpace).append("当前价格:").append(entry.getNetPrice().doubleValue()).append(lineSplitter);
@@ -71,7 +71,7 @@ public class QuantJob {
             } else if (strategy.shouldExit(index)) {
                 if (tradingRecord.exit(index, latestBar.getClosePrice(), DecimalNum.valueOf(10))) {
                     Trade exit = tradingRecord.getLastEntry();
-                    sb.append("Double EMA: ")
+                    sb.append("AI策略: ")
                             .append(preSpace).append("时间: ").append(timeStr).append(lineSplitter)
                             .append(preSpace).append("卖出信号").append(lineSplitter)
                             .append(preSpace).append("当前价格:").append(exit.getNetPrice().doubleValue()).append(lineSplitter);
