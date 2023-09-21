@@ -38,7 +38,7 @@ public class QuantJob {
     @Autowired
     private WeiXinService weiXinService;
 
-    @Scheduled(cron = "0 * * * *")
+    @Scheduled(cron = "0 0 * * * ?")
     public void doubleEma(){
         StringBuilder sb = new StringBuilder();
         for(Symbol symbol: MarketCache.minFundingRateList){
