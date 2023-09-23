@@ -35,7 +35,7 @@ public class WeiXinJob {
         List<Symbol> symbolList2 = rule.filter(MarketCache.maxFundingRateList);
         symbolList.addAll(symbolList2);
         if(symbolList.isEmpty()){
-            weiXinService.sendFundingMsg("未发现异常币种");
+            // weiXinService.sendFundingMsg("未发现异常币种");
         }else{
             for(Symbol symbol: symbolList){
                 sb.append(symbol.getBase()).append(" ");
