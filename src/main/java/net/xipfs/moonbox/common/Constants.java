@@ -16,6 +16,8 @@ public class Constants {
     public static double MIN_FUNDING_RATE  = -0.01;
     public static double MAX_FUNDING_RATE = 0.01;
 
+    public static double MIN_CAP_INTEREST_RADIO = 1;
+
 
     public interface INTERVAL {
         String INTERVAL_1m = "1m";

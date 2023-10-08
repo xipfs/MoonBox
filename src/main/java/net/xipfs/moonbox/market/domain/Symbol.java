@@ -14,6 +14,8 @@ public class Symbol implements Comparable<Symbol>{
     private Double fundingRate;
     private Double sumOpenInterest;
     private Double sumOpenInterestValue;
+    private Double marketCap;
+    private Double capInterestRadio;
 
     @Override
     public int compareTo(@NotNull Symbol o) {

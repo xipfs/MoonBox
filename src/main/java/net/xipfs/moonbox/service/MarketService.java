@@ -39,7 +39,6 @@ public class MarketService {
      * 查询所有交易对
      */
     public void queryAllSymbols(){
-        MarketCache.symbolMap.clear();
         List<String> symbolList = new ArrayList<>();
         String url = "https://api.binance.com/api/v3/exchangeInfo";
         String result = HttpUtil.get(url);
@@ -64,9 +63,6 @@ public class MarketService {
      *  获取资金费率
      */
     public void queryFundingRate(){
-        MarketCache.fundingRateMap.clear();
-        MarketCache.minFundingRateList.clear();
-        MarketCache.maxFundingRateList.clear();
         List<Symbol> symbolList = new ArrayList<>();
         String url = "https://www.binance.com/fapi/v1/premiumIndex";
         String result = HttpUtil.get(url);
@@ -88,8 +84,8 @@ public class MarketService {
             }
         });
         Collections.sort(symbolList);
-        MarketCache.minFundingRateList.addAll(symbolList.subList(0,10));
-        MarketCache.maxFundingRateList.addAll(CollUtil.reverse(symbolList).subList(0,10));
+        MarketCache.minFundingRateList = symbolList.subList(0,10);
+        MarketCache.maxFundingRateList = CollUtil.reverse(symbolList).subList(0,10);
         FileUtil.writeLines(symbolList, moonBoxConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
     }
 
