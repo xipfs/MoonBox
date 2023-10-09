@@ -29,6 +29,7 @@ public class WeiXinJob {
     private WeiXinService weiXinService;
     @Scheduled(cron = "0 0 * * * ?")
     public void riskAlarm(){
+        log.info("微信通知异常交易对信息");
         StringBuffer sb = new StringBuffer("异常币种: ");
         IRule rule = new ContractRule();
         List<Symbol> symbolList = rule.filter(MarketCache.minFundingRateList);
