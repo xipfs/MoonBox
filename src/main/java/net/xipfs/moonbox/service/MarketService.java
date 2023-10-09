@@ -85,8 +85,10 @@ public class MarketService {
         });
         Collections.sort(symbolList);
         MarketCache.minFundingRateList = symbolList.subList(0,10);
-        MarketCache.maxFundingRateList = CollUtil.reverse(symbolList).subList(0,10);
+        MarketCache.maxFundingRateList = symbolList.subList(symbolList.size()-10,symbolList.size());
         FileUtil.writeLines(symbolList, moonBoxConfig.getDataPath()+"fundingRate.txt", CharsetUtil.UTF_8,false);
+        FileUtil.writeLines(MarketCache.minFundingRateList, moonBoxConfig.getDataPath()+"minFundingRate.txt", CharsetUtil.UTF_8,false);
+        FileUtil.writeLines(MarketCache.maxFundingRateList, moonBoxConfig.getDataPath()+"maxFundingRate.txt", CharsetUtil.UTF_8,false);
     }
 
     public boolean queryFundingRate(Symbol symbol){

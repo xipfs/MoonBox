@@ -40,6 +40,7 @@ public class QuantJob {
 
     @Scheduled(cron = "0 0 * * * ?")
     public void doubleEma(){
+        log.info("开始AI分析");
         StringBuilder sb = new StringBuilder();
         boolean flag = false;
         for(Symbol symbol: MarketCache.minFundingRateList){
@@ -82,6 +83,7 @@ public class QuantJob {
             }
         }
         if(flag){
+            log.info("发送AI分析结果");
             weiXinService.sendFundingMsg(sb.toString());
         }
     }

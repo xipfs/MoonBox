@@ -27,7 +27,7 @@ import java.util.List;
 public class WeiXinJob {
     @Autowired
     private WeiXinService weiXinService;
-    @Scheduled(cron = "0 2 0,8,12,16,20 * * ?")
+    @Scheduled(cron = "0 0 * * * ?")
     public void riskAlarm(){
         StringBuffer sb = new StringBuffer("异常币种: ");
         IRule rule = new ContractRule();
